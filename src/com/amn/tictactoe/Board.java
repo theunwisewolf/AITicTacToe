@@ -1,6 +1,7 @@
 package com.amn.tictactoe;
 
-public class Board {
+public class Board 
+{
 	public static final int AI = 0;
 	public static final int HUMAN = 1;
 
@@ -10,14 +11,11 @@ public class Board {
 	public static final int DRAW = -2;
 
 	public int[][] squares = new int[ROWS][COLS];
+	public int FilledSquares = 0;
 
-	public AI ai;
-	public Human human;
-
-	public Board(AI ai, Human human)
+	public Board()
 	{
-		this.ai = ai;
-		this.human = human;
+		this.FilledSquares = 0;
 
 		this.clearBoard();
 	}
@@ -41,23 +39,12 @@ public class Board {
 	public void setSquare(int i, int j, int player)
 	{
 		this.squares[i][j] = player;
+		this.FilledSquares++;
 	}
 
 	public boolean squareIsEmpty(int i, int j)
 	{
 		return (this.squares[i][j] == -1);
-	}
-
-	public boolean makeMove(int i, int j, int player)
-	{
-		if (this.squares[i][j] != -1)
-		{
-			return false;
-		}
-
-		this.squares[i][j] = player;
-
-		return true;
 	}
 
 	public int getSize()

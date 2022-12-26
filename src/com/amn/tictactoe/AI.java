@@ -9,15 +9,41 @@ public class AI extends Player
 
 	public AI()
 	{
-		super(ID);
+		super(ID, true);
 	}
 
-	public AIMove makeMove(Board board)
+	public Move figureOutMove(Board board)
 	{
-		AIMove move = this.getBestMove(board, Player.AI);
-		board.makeMove(move.i, move.j, Player.AI);
+		Move move;
+		if (board.FilledSquares == 0)
+		{
+			int i = this.getRandomIndex();
+			int j = this.getRandomIndex();
+			move = new Move(i, j);
+		}
+		else
+		{
+			move = this.getBestMove(board, Player.AI);
+		}
 
 		return move;
+	}
+
+	public void makeMove(Board board, Move move) throws Exception
+	{
+		if (!board.squareIsEmpty(move.i, move.j))
+		{
+			throw new Exception("Square " + move.i + ", " + move.j + " not empty!");
+		}
+
+		board.setSquare(move.i, move.j, Player.AI);
+	}
+
+	private int getRandomIndex()
+	{
+		int min = 0;
+		int max = Board.ROWS - 1;
+		return min + (int)(Math.random() * ((max - min) + 1));
 	}
 
 	public char getSymbol()
@@ -25,31 +51,30 @@ public class AI extends Player
 		return SYMBOL;
 	}
 
-	AIMove getBestMove(Board board, int player)
+	Move getBestMove(Board board, int player)
 	{
 		int winner = board.gameOver();
 		if (winner == Board.AI)
 		{
-			return new AIMove(10);
+			return new Move(10);
 		}
 		else if (winner == Board.HUMAN)
 		{
-			return new AIMove(-10);
+			return new Move(-10);
 		}
 		else if (winner == Board.DRAW)
 		{
-			return new AIMove(0);
+			return new Move(0);
 		}
 
-		ArrayList<AIMove> moves = new ArrayList<AIMove>();
-
+		ArrayList<Move> moves = new ArrayList<Move>();
 		for (int i = 0; i < board.getSize(); ++i)
 		{
 			for (int j = 0; j < board.getSize(); j++)
 			{
 				if (board.squareIsEmpty(i, j))
 				{
-					AIMove move = new AIMove(i, j);
+					Move move = new Move(i, j);
 
 					// Make a move
 					board.setSquare(i, j, player);

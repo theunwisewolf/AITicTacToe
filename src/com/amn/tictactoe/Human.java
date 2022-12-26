@@ -1,7 +1,5 @@
 package com.amn.tictactoe;
 
-import com.amn.tictactoe.Player;
-
 public class Human extends Player
 {
 	public String playerName = "You";
@@ -11,18 +9,17 @@ public class Human extends Player
 
 	public Human()
 	{
-		super(ID);
+		super(ID, false);
 	}
 
-	public boolean makeMove(Board board, int i, int j)
+	public void makeMove(Board board, Move move) throws Exception
 	{
-		if (!board.squareIsEmpty(i, j))
+		if (!board.squareIsEmpty(move.i, move.j))
 		{
-			return false;
+			throw new Exception("Square " + move.i + ", " + move.j + " not empty!");
 		}
 
-		board.setSquare(i, j, Player.HUMAN);
-		return true;
+		board.setSquare(move.i, move.j, Player.HUMAN);
 	}
 
 	public char getSymbol()

@@ -1,22 +1,23 @@
 package com.amn.tictactoe;
 
-public class AIMove {
+public class Move 
+{
 	public int i;
 	public int j;
 	public int score;
 
-	public AIMove(int score)
+	public Move(int score)
 	{
 		this.score = score;
 	}
 
-	public AIMove(int i, int j)
+	public Move(int i, int j)
 	{
 		this.i = i;
 		this.j = j;
 	}
 
-	public AIMove(int i, int j, int score)
+	public Move(int i, int j, int score)
 	{
 		this.i = i;
 		this.j = j;

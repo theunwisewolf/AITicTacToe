@@ -1,9 +1,5 @@
 package com.amn.tictactoe;
 
-import com.amn.tictactoe.Board;
-import com.amn.tictactoe.AI;
-import com.amn.tictactoe.Human;
-
 import javax.swing.*;
 
 import java.awt.*;
@@ -32,7 +28,7 @@ public class Applet_Main extends Applet implements ActionListener
 
 	public void init()
 	{
-		board = new Board(ai, human);
+		board = new Board();
 		this.setLayout(new GridLayout(3,3));
 
 		for (int i = 0; i < ROWS; ++i)
@@ -92,40 +88,40 @@ public class Applet_Main extends Applet implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent event)
 	{
-		clickedSquare = (Button)event.getSource();
+		// clickedSquare = (Button)event.getSource();
 
-		for (int i = 0; i < ROWS; ++i)
-		{
-			for (int j = 0; j < COLS; j++)
-			{
-				if (clickedSquare == squares[i][j])
-				{
-					Player player = (currentPlayer == Player.HUMAN) ? human : ai;
-					if (currentPlayer == Player.HUMAN)
-					{
-						if (!((Human)player).makeMove(board, i, j))
-						{
-							this.showMessage("That move is invalid.");
-						}
-						else
-						{
-							clickedSquare.setLabel(String.valueOf(player.getSymbol()));
-							this.switchPlayer();
+		// for (int i = 0; i < ROWS; ++i)
+		// {
+		// 	for (int j = 0; j < COLS; j++)
+		// 	{
+		// 		if (clickedSquare == squares[i][j])
+		// 		{
+		// 			Player player = (currentPlayer == Player.HUMAN) ? human : ai;
+		// 			if (currentPlayer == Player.HUMAN)
+		// 			{
+		// 				if (!((Human)player).makeMove(board, i, j))
+		// 				{
+		// 					this.showMessage("That move is invalid.");
+		// 				}
+		// 				else
+		// 				{
+		// 					clickedSquare.setLabel(String.valueOf(player.getSymbol()));
+		// 					this.switchPlayer();
 							
-							AIMove move = ai.makeMove(board);
-							squares[move.i][move.j].setLabel(String.valueOf(ai.getSymbol()));
+		// 					Move move = ai.makeMove(board);
+		// 					squares[move.i][move.j].setLabel(String.valueOf(ai.getSymbol()));
 
-							if (DEBUG)
-							{
-								board.printBoardState();
-							}
+		// 					if (DEBUG)
+		// 					{
+		// 						board.printBoardState();
+		// 					}
 
-							this.switchPlayer();
-						}
-					}
-				}
-			}
-		}
+		// 					this.switchPlayer();
+		// 				}
+		// 			}
+		// 		}
+		// 	}
+		// }
 
 		int winner = board.gameOver();
 		if (winner == Board.DRAW)
